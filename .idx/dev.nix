@@ -2,7 +2,7 @@
 # see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
-  channel = "stable-24.05"; # or "unstable"
+  channel = "unstable"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
   packages = [
     # pkgs.go
@@ -10,6 +10,9 @@
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
+    pkgs.bun
+    pkgs.gh
+
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -22,25 +25,33 @@
     # Enable previews
     previews = {
       enable = true;
+
       previews = {
-        # web = {
-        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-        #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
-        #   manager = "web";
-        #   env = {
-        #     # Environment variables to set for your server
-        #     PORT = "$PORT";
-        #   };
-        # };
+        web = {
+          # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+          # and show it in IDX's web preview panel
+          # command = ["npm" "run" "dev" "--" "--port" "$PORT" "--hostname" "0.0.0.0"];
+          # command = ["bun" "dev" "--" "--host" "$HOST" "--port" "$PORT"];
+          # command = ["bun" "start:dev" "--" "--host" "0.0.0.0" "--port" "$PORT"];
+          command = ["bun" "start:dev"];
+          manager = "web";
+          env = {
+          #   # Environment variables to set for your server
+            # PORT = "9000";
+            # HOST = "0.0.0.0";
+          };
+        };
       };
+
     };
+
     # Workspace lifecycle hooks
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
         # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
+        bun-setup = "bunx @nestjs/cli new nestproj --directory . -s -p bun";
+        bun-install = "bun i";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
       };
