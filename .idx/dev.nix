@@ -50,8 +50,8 @@
       # Runs when a workspace is first created
       onCreate = {
         # Example: install JS dependencies from NPM
-        bun-setup = "bunx @nestjs/cli new nestproj --directory . -s -p bun";
-        bun-install = "bun i";
+        bun-setup = "bunx @nestjs/cli new nestproj --directory . -s -p bun;bun i";
+        # bun-install = "bun i";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
       };
