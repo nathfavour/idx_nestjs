@@ -8,7 +8,7 @@
     # pkgs.go
     # pkgs.python311
     # pkgs.python311Packages.pip
-    # pkgs.nodejs_20
+    pkgs.nodejs_24
     # pkgs.nodePackages.nodemon
     pkgs.bun
     pkgs.gh
